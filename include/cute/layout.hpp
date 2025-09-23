@@ -1062,6 +1062,15 @@ group(Layout<Shape,Stride> const& layout)
                      group<B,E>(layout.stride()));
 }
 
+template <int N, class Shape, class Stride>
+CUTE_HOST_DEVICE constexpr
+auto
+remove(Layout<Shape,Stride> const& layout)
+{
+  return make_layout(remove<N>(layout.shape()),
+                     remove<N>(layout.stride()));
+}
+
 //
 // Composition of two layouts: lhs o rhs
 // @post compatible(rhs, result)

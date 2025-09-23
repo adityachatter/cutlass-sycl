@@ -40,6 +40,11 @@ foreach(HEAD_DIM 64 96 128 192)
   )
 
   cutlass_example_add_executable(
+    06_xe_fmha_fwd_hdim${HEAD_DIM}
+    06_xe_fmha_fwd.cpp
+  )
+
+  cutlass_example_add_executable(
     06_bmg_prefill_attention_cachedKV_hdim${HEAD_DIM}
     06_bmg_prefill_attention_prefill_cachedKV.cpp
     TEST_COMMAND_OPTIONS
@@ -72,4 +77,14 @@ foreach(HEAD_DIM 64 96 128 192)
   target_compile_definitions(06_bmg_decode_attention_hdim${HEAD_DIM} PRIVATE HEAD_DIM=${HEAD_DIM})
   target_compile_definitions(06_bmg_prefill_attention_fp8_hdim${HEAD_DIM} PRIVATE HEAD_DIM=${HEAD_DIM})
   target_compile_definitions(06_bmg_decode_attention_fp8_hdim${HEAD_DIM} PRIVATE HEAD_DIM=${HEAD_DIM})
+  target_compile_definitions(06_xe_fmha_fwd_hdim${HEAD_DIM} PRIVATE HEAD_DIM=${HEAD_DIM} SHOW_DIFF=1)
+endforeach()
+
+foreach(HEAD_DIM 16 32)
+  cutlass_example_add_executable(
+    06_xe_fmha_fwd_hdim${HEAD_DIM}
+    06_xe_fmha_fwd.cpp
+  )
+  target_compile_definitions(06_xe_fmha_fwd_hdim${HEAD_DIM} PRIVATE HEAD_DIM=${HEAD_DIM} SHOW_DIFF=1)
+  target_compile_options(06_xe_fmha_fwd_hdim${HEAD_DIM} PRIVATE -ftemplate-backtrace-limit=0)
 endforeach()
